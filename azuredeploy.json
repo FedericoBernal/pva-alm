@@ -4,15 +4,15 @@
     "parameters": {
         "sites_newTestDeploy_name": {
             "defaultValue": "newTestDeploy",
-            "type": "string"
+            "type": "String"
         },
         "serverfarms_newTestDeploy_name": {
             "defaultValue": "newTestDeploy",
-            "type": "string"
+            "type": "String"
         },
         "botServices_newTestDeploy_name": {
             "defaultValue": "newTestDeploy",
-            "type": "string"
+            "type": "String"
         }
     },
     "variables": {},

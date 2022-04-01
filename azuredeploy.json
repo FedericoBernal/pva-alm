@@ -3,15 +3,15 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sites_newTestDeploy_name": {
-            "defaultValue": "newTestDeploy3",
+            "defaultValue": "newTestDeploy4",
             "type": "String"
         },
         "serverfarms_newTestDeploy_name": {
-            "defaultValue": "newTestDeploy3",
+            "defaultValue": "newTestDeploy4",
             "type": "String"
         },
         "botServices_newTestDeploy_name": {
-            "defaultValue": "newTestDeploy3",
+            "defaultValue": "newTestDeploy4",
             "type": "String"
         }
     },
@@ -112,19 +112,6 @@
                 },
                 "etag": "W/\"9917b8333a9d50469bbaa9434d5441f44/1/2022 2:30:16 PM\"",
                 "channelName": "MsTeamsChannel",
-                "location": "global"
-            }
-        },
-        {
-            "type": "Microsoft.BotService/botServices/channels",
-            "apiVersion": "2021-05-01-preview",
-            "name": "[concat(parameters('botServices_newTestDeploy_name'), '/Omnichannel')]",
-            "location": "global",
-            "dependsOn": [
-                "[resourceId('Microsoft.BotService/botServices', parameters('botServices_newTestDeploy_name'))]"
-            ],
-            "properties": {
-                "etag": "W/\"ef33502d130516a1bf8d69d0a51d3fe24/1/2022 2:30:16 PM\"",
                 "location": "global"
             }
         },

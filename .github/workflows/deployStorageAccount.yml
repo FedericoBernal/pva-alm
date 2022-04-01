@@ -21,6 +21,7 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./azuredeploy.json
         parameters: ./parameters.json
+        deploymentMode: Incremental
 
       # output containerName variable from template
     - run: echo ${{ steps.deploy.outputs.containerName }}

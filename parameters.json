@@ -2,13 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "sites_BFTranslatorBot_name": {
+        "sites_newTestDeploy_name": {
             "value": null
         },
-        "serverfarms_BFTranslatorBot_name": {
+        "serverfarms_newTestDeploy_name": {
             "value": null
         },
-        "botServices_BFTranslatorBot_name": {
+        "botServices_newTestDeploy_name": {
             "value": null
         }
     }

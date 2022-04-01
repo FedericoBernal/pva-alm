@@ -1,0 +1,96 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\repos\\southworks\\teide\\dev\\PVA Samples\\TranslationBot\\Bot\\TranslationBot\\TranslationBot\\TranslationBot.csproj": {}
+  },
+  "projects": {
+    "C:\\repos\\southworks\\teide\\dev\\PVA Samples\\TranslationBot\\Bot\\TranslationBot\\TranslationBot\\TranslationBot.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\repos\\southworks\\teide\\dev\\PVA Samples\\TranslationBot\\Bot\\TranslationBot\\TranslationBot\\TranslationBot.csproj",
+        "projectName": "TranslationBot",
+        "projectPath": "C:\\repos\\southworks\\teide\\dev\\PVA Samples\\TranslationBot\\Bot\\TranslationBot\\TranslationBot\\TranslationBot.csproj",
+        "packagesPath": "C:\\Users\\FedericoBernal\\.nuget\\packages\\",
+        "outputPath": "C:\\repos\\southworks\\teide\\dev\\PVA Samples\\TranslationBot\\Bot\\TranslationBot\\TranslationBot\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\FedericoBernal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://botbuilder.myget.org/F/aitemplates/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.Bot.Builder.AI.Luis": {
+              "target": "Package",
+              "version": "[4.15.2, )"
+            },
+            "Microsoft.Bot.Builder.AI.Orchestrator": {
+              "target": "Package",
+              "version": "[4.15.2, )"
+            },
+            "Microsoft.Bot.Builder.AI.QnA": {
+              "target": "Package",
+              "version": "[4.15.2, )"
+            },
+            "Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime": {
+              "target": "Package",
+              "version": "[4.15.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.2, 3.1.2]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

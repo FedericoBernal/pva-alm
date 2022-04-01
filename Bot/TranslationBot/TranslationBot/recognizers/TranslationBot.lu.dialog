@@ -1,8 +1,0 @@
-{
-  "$kind": "Microsoft.MultiLanguageRecognizer",
-  "id": "ORCHESTRATOR_TranslationBot",
-  "recognizers": {
-    "en-us": "TranslationBot.en-us.lu",
-    "": "TranslationBot.en-us.lu"
-  }
-}

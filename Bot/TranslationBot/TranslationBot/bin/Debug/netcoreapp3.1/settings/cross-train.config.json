@@ -1,8 +1,0 @@
-{
-  "TranslationBot.en-us": {
-    "rootDialog": true,
-    "triggers": {
-      "PVA_Skill": ""
-    }
-  }
-}

@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sites_newTestDeploy_name": {
-            "value": "newTestDeploy"
+            "value": "newTestDeploy2"
         },
         "serverfarms_newTestDeploy_name": {
-            "value": "newTestDeploy"
+            "value": "newTestDeploy2"
         },
         "botServices_newTestDeploy_name": {
-            "value": "newTestDeploy"
+            "value": "newTestDeploy2"
         }
     }
 }

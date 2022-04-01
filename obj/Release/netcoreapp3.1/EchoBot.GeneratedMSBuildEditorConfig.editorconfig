@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = EchoBot
+build_property.ProjectDir = C:\Users\mica\Documents\botbuilder-samples\samples\csharp_dotnetcore\02.echo-bot\

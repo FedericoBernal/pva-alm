@@ -3,15 +3,15 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sites_newTestDeploy_name": {
-            "defaultValue": "newTestDeploy",
+            "defaultValue": "newTestDeploy2",
             "type": "String"
         },
         "serverfarms_newTestDeploy_name": {
-            "defaultValue": "newTestDeploy",
+            "defaultValue": "newTestDeploy2",
             "type": "String"
         },
         "botServices_newTestDeploy_name": {
-            "defaultValue": "newTestDeploy",
+            "defaultValue": "newTestDeploy2",
             "type": "String"
         }
     },

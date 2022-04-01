@@ -1,67 +1,1770 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "metadata": {
-    "_generator": {
-      "name": "bicep",
-      "version": "0.4.1124.51302",
-      "templateHash": "11316749979286655376"
-    }
-  },
-  "parameters": {
-    "storageAccountType": {
-      "type": "string",
-      "defaultValue": "Standard_LRS",
-      "allowedValues": [
-        "Premium_LRS",
-        "Premium_ZRS",
-        "Standard_GRS",
-        "Standard_GZRS",
-        "Standard_LRS",
-        "Standard_RAGRS",
-        "Standard_RAGZRS",
-        "Standard_ZRS"
-      ],
-      "metadata": {
-        "description": "Storage Account type"
-      }
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_newTestDeploy_name": {
+            "defaultValue": "newTestDeploy",
+            "type": "String"
+        },
+        "serverfarms_newTestDeploy_name": {
+            "defaultValue": "newTestDeploy",
+            "type": "String"
+        },
+        "botServices_newTestDeploy_name": {
+            "defaultValue": "newTestDeploy",
+            "type": "String"
+        }
     },
-    "location": {
-      "type": "string",
-      "defaultValue": "[resourceGroup().location]",
-      "metadata": {
-        "description": "Location for all resources."
-      }
-    },
-    "storageAccountName": {
-      "type": "string",
-      "defaultValue": "[format('store{0}', uniqueString(resourceGroup().id))]",
-      "metadata": {
-        "description": "The name of the Storage Account"
-      }
-    }
-  },
-  "resources": [
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2021-06-01",
-      "name": "[parameters('storageAccountName')]",
-      "location": "[parameters('location')]",
-      "sku": {
-        "name": "[parameters('storageAccountType')]"
-      },
-      "kind": "StorageV2",
-      "properties": {}
-    }
-  ],
-  "outputs": {
-    "storageAccountName": {
-      "type": "string",
-      "value": "[parameters('storageAccountName')]"
-    },
-    "storageAccountId": {
-      "type": "string",
-      "value": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
-    }
-  }
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.BotService/botServices",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[parameters('botServices_newTestDeploy_name')]",
+            "location": "global",
+            "tags": {
+                "webapp": "newTestDeploy.azurewebsites.net"
+            },
+            "sku": {
+                "name": "F0"
+            },
+            "kind": "azurebot",
+            "properties": {
+                "displayName": "[parameters('botServices_newTestDeploy_name')]",
+                "iconUrl": "https://docs.botframework.com/static/devportal/client/images/bot-framework-default.png",
+                "endpoint": "https://newTestDeploy.azurewebsites.net/api/messages",
+                "msaAppId": "9d3821df-8a7e-4436-8f16-721c04bf8251",
+                "luisAppIds": [],
+                "isStreamingSupported": false,
+                "schemaTransformationVersion": "1.3",
+                "isCmekEnabled": false,
+                "openWithHint": "bfcomposer://",
+                "disableLocalAuth": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2021-03-01",
+            "name": "[parameters('serverfarms_newTestDeploy_name')]",
+            "location": "West US",
+            "sku": {
+                "name": "S1",
+                "tier": "Standard",
+                "size": "S1",
+                "family": "S",
+                "capacity": 1
+            },
+            "kind": "windows",
+            "properties": {
+                "perSiteScaling": false,
+                "elasticScaleEnabled": false,
+                "maximumElasticWorkerCount": 1,
+                "isSpot": false,
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "targetWorkerCount": 0,
+                "targetWorkerSizeId": 0,
+                "zoneRedundant": false
+            }
+        },
+        {
+            "type": "Microsoft.BotService/botServices/channels",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[concat(parameters('botServices_newTestDeploy_name'), '/DirectLineChannel')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.BotService/botServices', parameters('botServices_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "properties": {
+                    "sites": [
+                        {
+                            "siteName": "Default_Site",
+                            "isEnabled": true,
+                            "isV1Enabled": true,
+                            "isV3Enabled": true,
+                            "isSecureSiteEnabled": false,
+                            "isBlockUserUploadEnabled": false
+                        }
+                    ]
+                },
+                "etag": "W/\"81628343f0082782349847b51c3f298f4/1/2022 2:30:16 PM\"",
+                "channelName": "DirectLineChannel",
+                "location": "global"
+            }
+        },
+        {
+            "type": "Microsoft.BotService/botServices/channels",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[concat(parameters('botServices_newTestDeploy_name'), '/MsTeamsChannel')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.BotService/botServices', parameters('botServices_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "properties": {
+                    "enableCalling": false,
+                    "incomingCallRoute": "graphPma",
+                    "isEnabled": true,
+                    "deploymentEnvironment": 0,
+                    "acceptedTerms": true
+                },
+                "etag": "W/\"9917b8333a9d50469bbaa9434d5441f44/1/2022 2:30:16 PM\"",
+                "channelName": "MsTeamsChannel",
+                "location": "global"
+            }
+        },
+        {
+            "type": "Microsoft.BotService/botServices/channels",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[concat(parameters('botServices_newTestDeploy_name'), '/Omnichannel')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.BotService/botServices', parameters('botServices_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "etag": "W/\"ef33502d130516a1bf8d69d0a51d3fe24/1/2022 2:30:16 PM\"",
+                "location": "global"
+            }
+        },
+        {
+            "type": "Microsoft.BotService/botServices/channels",
+            "apiVersion": "2021-05-01-preview",
+            "name": "[concat(parameters('botServices_newTestDeploy_name'), '/WebChatChannel')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('Microsoft.BotService/botServices', parameters('botServices_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "properties": {
+                    "sites": [
+                        {
+                            "siteName": "Default Site",
+                            "isEnabled": true,
+                            "isWebchatPreviewEnabled": true
+                        }
+                    ]
+                },
+                "etag": "W/\"e8f3fca23c4863da8568655ff34fee4a4/1/2022 2:30:16 PM\"",
+                "channelName": "WebChatChannel",
+                "location": "global"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2021-03-01",
+            "name": "[parameters('sites_newTestDeploy_name')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_newTestDeploy_name'))]"
+            ],
+            "kind": "app",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "newTestDeploy.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "newTestDeploy.scm.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_newTestDeploy_name'))]",
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "siteConfig": {
+                    "numberOfWorkers": 1,
+                    "acrUseManagedIdentityCreds": false,
+                    "alwaysOn": false,
+                    "http20Enabled": false,
+                    "functionAppScaleLimit": 0,
+                    "minimumElasticInstanceCount": 0
+                },
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "clientCertMode": "Required",
+                "hostNamesDisabled": false,
+                "customDomainVerificationId": "34778F9C88726D0482ED75F602D444CA0405CACBDBF0A2C74F68A682F94863C9",
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": false,
+                "redundancyMode": "None",
+                "storageAccountRequired": false,
+                "keyVaultReferenceIdentity": "SystemAssigned"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/ftp')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/scm')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/web')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "httpLoggingEnabled": false,
+                "acrUseManagedIdentityCreds": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$newTestDeploy",
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": true,
+                "alwaysOn": false,
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "vnetRouteAllEnabled": false,
+                "vnetPrivatePortsCount": 0,
+                "cors": {
+                    "allowedOrigins": [
+                        "https://botservice.hosting.portal.azure.net",
+                        "https://hosting.onecloud.azure-test.net/"
+                    ],
+                    "supportCredentials": false
+                },
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": false,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "scmMinTlsVersion": "1.0",
+                "ftpsState": "AllAllowed",
+                "preWarmedInstanceCount": 0,
+                "functionAppScaleLimit": 0,
+                "functionsRuntimeScaleMonitoringEnabled": false,
+                "minimumElasticInstanceCount": 0,
+                "azureStorageAccounts": {}
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/65edfac808d44cbf9c532a7f7c4b9672')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "ZipDeploy",
+                "message": "Created via a push deployment",
+                "start_time": "2022-03-31T21:07:44.0756109Z",
+                "end_time": "2022-03-31T21:07:51.6905215Z",
+                "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/803bd204d7394a919380753535471d84')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "ZipDeploy",
+                "message": "Created via a push deployment",
+                "start_time": "2022-03-25T02:27:22.4392343Z",
+                "end_time": "2022-03-25T02:27:34.6510635Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/9eea3bf4a2ec4b06a6e417c699bc670d')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "ZipDeploy",
+                "message": "Created via a push deployment",
+                "start_time": "2022-03-25T16:58:02.8012605Z",
+                "end_time": "2022-03-25T16:58:09.7707322Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/b06bf5367d2b49bba40f07b3dca3a338')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "ZipDeploy",
+                "message": "Created via a push deployment",
+                "start_time": "2022-03-17T12:56:36.4904676Z",
+                "end_time": "2022-03-17T12:57:08.523666Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/d867d65132054675ba4b9302ca3cae1e')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "ZipDeploy",
+                "message": "Created via a push deployment",
+                "start_time": "2022-03-30T14:47:50.6321724Z",
+                "end_time": "2022-03-30T14:48:11.0142271Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/e2f86b04557b4706adbe10c0ff1ecfda')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "ZipDeploy",
+                "message": "Created via a push deployment",
+                "start_time": "2022-03-17T17:34:52.4242261Z",
+                "end_time": "2022-03-17T17:35:01.7124081Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2021-03-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/', parameters('sites_newTestDeploy_name'), '.azurewebsites.net')]",
+            "location": "West US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ],
+            "properties": {
+                "siteName": "newTestDeploy",
+                "hostNameType": "Verified"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-17T03_11_54_7080843')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-17T12_11_55_9424346')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-17T18_11_56_7730408')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-18T03_11_58_0583780')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-18T12_11_59_2770994')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-18T15_11_59_6909517')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-18T18_12_00_1206194')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-18T21_12_00_5194544')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-19T00_12_00_9447049')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-19T03_12_01_3736290')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-19T12_12_02_6161475')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-19T15_12_03_0329282')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-19T18_12_03_5001175')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-19T21_12_03_8821256')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-20T00_12_04_3000515')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-20T03_12_04_7277160')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-20T12_12_05_9766427')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-20T15_12_06_3816322')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-20T18_12_06_8014727')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-20T21_12_07_2339837')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-21T00_12_07_6264610')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-21T03_12_08_0602291')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-21T12_12_09_3237912')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-21T15_12_09_7319471')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-21T18_12_10_1427916')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-21T21_12_10_5750617')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-22T00_12_11_0084478')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-22T03_12_11_4245034')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-22T06_12_11_8504693')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-22T09_12_12_2799356')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-22T12_12_12_7222680')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-22T15_12_13_1280701')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-22T18_12_13_5195040')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-22T21_12_13_9446754')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-23T00_12_14_3680068')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-23T03_12_14_7930062')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-23T12_12_16_0583639')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-23T15_12_16_4725257')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-23T18_12_16_8834758')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-23T21_12_17_2844802')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-24T00_12_17_7021339')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-24T03_12_18_1255336')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-24T12_12_19_3749074')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-24T15_12_19_7908281')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-24T18_12_20_2021312')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-24T21_12_20_6226338')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-25T00_12_21_0491510')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-25T03_12_21_4535963')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-25T12_12_22_7145991')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-25T15_12_23_1347206')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-25T18_12_23_5400512')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-25T21_12_23_9502739')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-26T00_12_24_4368583')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-26T03_12_24_8461677')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-26T08_40_11_1832889')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-26T12_05_03_7111676')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-26T15_05_03_7551522')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-26T18_05_03_7920419')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-26T21_05_03_8412841')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-27T00_05_03_9079285')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-27T03_05_03_9735502')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-27T12_05_04_1642586')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-27T15_05_04_2230952')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-27T18_05_04_3293159')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-27T21_05_04_5171519')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T00_05_04_4001587')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T03_05_04_4952120')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T10_05_05_0578695')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T11_05_05_0633199')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T12_05_05_0872262')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T13_05_05_1090088')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T14_05_05_1857915')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T15_05_05_1613012')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T16_05_05_2186125')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T17_05_05_2138407')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T18_05_05_2262530')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T19_05_05_2752529')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T20_05_05_2770889')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T21_05_05_3253382')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T22_05_05_3441310')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-28T23_05_05_3378527')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T00_05_05_3483658')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T01_05_05_3715000')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T02_05_05_3864265')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T03_05_05_4109237')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T04_05_05_4807632')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T05_05_05_4610570')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T06_05_05_4989949')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T07_05_05_5238417')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T08_05_05_5383864')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T09_05_05_5692395')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T10_05_06_4315440')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T11_05_06_4562500')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T12_05_06_4937712')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T13_05_06_5033597')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T14_05_06_5318705')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T15_05_06_5878832')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T16_05_06_5614579')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T17_05_06_6298144')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T18_05_06_6111845')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T20_05_06_6937549')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T21_05_06_6779568')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T22_05_06_7068290')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-29T23_05_06_7634340')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T00_05_06_7598634')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T01_05_06_7909291')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T02_05_06_8097572')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T03_05_06_8198708')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T04_05_06_8409949')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T05_05_06_9182571')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T06_05_06_8800070')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T07_05_06_9209000')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T08_05_06_9564530')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T09_05_06_9689454')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T10_05_06_9960317')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T11_05_07_0558205')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T12_05_07_0605297')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T13_05_07_1447786')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T14_05_07_0829778')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T15_05_07_0970149')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T16_05_07_1569869')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T18_05_07_1878000')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T19_05_07_2069821')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T20_05_07_2263934')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T21_05_07_2427545')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T22_05_07_2691548')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-30T23_05_07_3109551')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T00_05_07_3362505')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T01_05_07_3594646')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T02_05_07_3857857')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T03_05_07_3950371')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T04_05_07_4520580')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T05_05_07_4691609')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T06_05_07_5015291')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T07_05_07_4897926')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T08_05_07_5032253')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T09_05_07_5644788')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T10_05_07_5940246')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T11_05_07_5709329')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T12_05_07_5939796')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T13_05_07_6959234')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T14_05_07_7490249')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T15_05_07_6700084')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T16_05_07_6919771')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T17_05_07_7627119')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T18_05_07_7207264')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T19_05_07_7563972')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T20_05_07_8400076')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T21_05_07_8377086')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T22_05_07_8203540')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-03-31T23_05_07_9132779')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T00_05_07_9250751')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T01_05_07_8968827')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T02_05_07_9522499')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T03_05_07_9352799')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T04_05_07_9600346')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T05_05_08_0242449')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T06_05_08_0377808')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T07_05_08_0300572')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T08_05_08_0555089')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T09_05_08_0917571')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T10_05_08_1654439')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T11_05_08_2176058')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T12_05_08_1777907')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T13_05_08_1839668')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_newTestDeploy_name'), '/2022-04-01T14_05_08_2064108')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_newTestDeploy_name'))]"
+            ]
+        }
+    ]
 }

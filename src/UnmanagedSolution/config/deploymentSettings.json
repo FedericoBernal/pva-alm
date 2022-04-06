@@ -1,6 +1,6 @@
 {
   "EnvironmentVariables": [],
   "ConnectionReferences": [
-	"ConnectionId": "#{DKDT_PVAMSNWEATHER}#",
+	"ConnectionId": "",
   ]
 }

@@ -1,11 +1,11 @@
 <ImportExportXml version="9.2.22024.150" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
-    <UniqueName>UnmanagedBot</UniqueName>
+    <UniqueName>UnmanagedSolution</UniqueName>
     <LocalizedNames>
-      <LocalizedName description="UnmanagedBot" languagecode="1033" />
+      <LocalizedName description="UnmanagedSolution" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.0.0.0</Version>
+    <Version>1.0.0.1</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>DefaultPublisherorgea394ded</UniqueName>

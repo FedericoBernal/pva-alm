@@ -1,24 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ImportExportXml version="9.2.22024.150" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
-    <UniqueName>UnmanagedSolution</UniqueName>
+    <UniqueName>DeployExampleSolution</UniqueName>
     <LocalizedNames>
-      <LocalizedName description="UnmanagedSolution" languagecode="1033" />
+      <LocalizedName description="Deploy Example Solution" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.0.0.1</Version>
-    <Managed>0</Managed>
+    <Version>0.0.0.0</Version>
+    <Managed>2</Managed>
     <Publisher>
-      <UniqueName>DefaultPublisherorgea394ded</UniqueName>
+      <UniqueName>Cr86818</UniqueName>
       <LocalizedNames>
-        <LocalizedName description="Default Publisher for orgea394ded" languagecode="1033" />
+        <LocalizedName description="CDS Default Publisher" languagecode="1033" />
       </LocalizedNames>
-      <Descriptions>
-        <Description description="Default publisher for this organization" languagecode="1033" />
-      </Descriptions>
+      <Descriptions />
       <EMailAddress xsi:nil="true"></EMailAddress>
       <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
-      <CustomizationPrefix>new</CustomizationPrefix>
-      <CustomizationOptionValuePrefix>10000</CustomizationOptionValuePrefix>
+      <CustomizationPrefix>cr62a</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>34609</CustomizationOptionValuePrefix>
       <Addresses>
         <Address>
           <AddressNumber>1</AddressNumber>

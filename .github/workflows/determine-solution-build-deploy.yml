@@ -58,6 +58,16 @@ jobs:
 
           Start-Build-Deploy-Solution @params
 
+        run: |
+          echo "script_path: ${{ env.workflow_scripts_path }}"
+          echo "solution_name_string: ${{ steps.dispatch-build-deploy-solution.outputs.solution_names }}"
+          echo "files: ${{ steps.files.outputs.all }}"
+          echo "github_ref: ${{ github.ref }}"
+          echo "pr_head_ref: ${{ github.event.pull_request.head.ref }}"
+          echo "github_sha: ${{ github.sha }}"
+          echo "pr_head_sha: ${{ github.event.pull_request.head.sha }}"
+          echo "environment: ${{ env.environment }}"
+
       - name: create-commit-statuses
         id: create-commit-statuses
         if: contains(github.ref, 'pull')

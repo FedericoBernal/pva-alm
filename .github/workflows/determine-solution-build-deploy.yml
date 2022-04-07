@@ -58,7 +58,6 @@ jobs:
 
           Start-Build-Deploy-Solution @params
 
-        run: |
           echo "script_path: ${{ env.workflow_scripts_path }}"
           echo "solution_name_string: ${{ steps.dispatch-build-deploy-solution.outputs.solution_names }}"
           echo "files: ${{ steps.files.outputs.all }}"

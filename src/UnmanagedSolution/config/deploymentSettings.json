@@ -1,6 +1,10 @@
 {
   "EnvironmentVariables": [],
   "ConnectionReferences": [
-	"ConnectionId": "",
+    {
+      "LogicalName": "new-5Fcustom-20connector",
+      "ConnectionId": "#{DKDT_PVAMSNWEATHER}#",
+      "ConnectorId": "/providers/Microsoft.PowerApps/apis/shared_msnweather"
+    }
   ]
 }

@@ -1,0 +1,144 @@
+{
+  "intents": [
+    {
+      "triggerQueries": [
+        "send email"
+      ],
+      "dialogId": "new_topic_4b68276a2d06499b9af5f2002c9f0bab",
+      "isTriggeringEnabled": true,
+      "id": "new_topic_4b68276a2d06499b9af5f2002c9f0bab",
+      "displayName": "Send an email",
+      "createdTime": "2022-04-08T15:14:08.7242514Z",
+      "updatedTime": "2022-04-08T19:48:23.677655Z",
+      "createdUserId": "8f6db5fe-1bd4-4c35-812c-4aa553b4e68a",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    }
+  ],
+  "dialogs": [
+    {
+      "rootNodeId": "d8a2da80-e47a-4d39-904f-9e2324870b7e",
+      "actionNodes": [
+        {
+          "contextVariableId": "2cfa5747-cddd-4812-960b-7ecb2a1c372b",
+          "nodeType": "ActionNode",
+          "inputParameterVariableIdMap": {
+            "text": "{688a1077-6aa9-461b-836e-fa1afbc56716}"
+          },
+          "id": "63660677-585a-4258-ad26-f655ab162219"
+        }
+      ],
+      "questionNodes": [
+        {
+          "contextVariableId": "688a1077-6aa9-461b-836e-fa1afbc56716",
+          "nodeType": "QuestionNode",
+          "id": "d8a2da80-e47a-4d39-904f-9e2324870b7e",
+          "defaultTargetNodeId": "63660677-585a-4258-ad26-f655ab162219"
+        }
+      ],
+      "id": "new_topic_4b68276a2d06499b9af5f2002c9f0bab",
+      "displayName": "Untitled",
+      "createdTime": "2022-04-08T15:14:08.7242514Z",
+      "updatedTime": "2022-04-08T19:48:23.677655Z",
+      "createdUserId": "8f6db5fe-1bd4-4c35-812c-4aa553b4e68a",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    }
+  ],
+  "botMessages": [
+    {
+      "channelContent": {
+        "web": {
+          "contentFormat": "Markdown",
+          "content": "Enter an email"
+        }
+      },
+      "id": "d1899cd8-8c70-4bd0-88cf-898975f92edb",
+      "createdTime": "2022-04-08T15:08:46.82Z",
+      "updatedTime": "2022-04-08T15:08:46.82Z",
+      "createdUserId": "user-0",
+      "updatedUserId": "user-0"
+    }
+  ],
+  "actionDefinitions": [
+    {
+      "timeoutInSeconds": 60,
+      "retryCount": 1,
+      "method": 2,
+      "headers": {
+        "accept": "application/json"
+      },
+      "bodyContent": "{\"text\":\"{688a1077-6aa9-461b-836e-fa1afbc56716}\"}",
+      "actionType": "Flow",
+      "flowMetadata": {
+        "id": "f11deaee-4db7-ec11-983f-0022482e2a27",
+        "title": "Send an email",
+        "description": "Call this flow from Power Virtual Agents.",
+        "httpMethod": 2,
+        "inputParameters": [
+          {
+            "name": "Email",
+            "id": "text",
+            "type": "String",
+            "optional": false
+          }
+        ],
+        "outputSchemaType": "Json",
+        "createdTime": "2022-04-08T15:09:53Z",
+        "isEnabled": true,
+        "lastModifiedTime": "2022-04-08T15:13:29Z",
+        "versionNumber": 1157405
+      },
+      "id": "c7326b98-5e80-4a19-9c1c-8312d3e638f7",
+      "displayName": "Send an email",
+      "description": "Call this flow from Power Virtual Agents.",
+      "createdTime": "2022-04-08T15:13:51.13Z",
+      "updatedTime": "2022-04-08T15:13:51.13Z"
+    }
+  ],
+  "contextVariables": [
+    {
+      "systemType": "Email",
+      "initializerType": "UserQuestion",
+      "scope": "Dialog",
+      "greedySlotFillingEnabled": true,
+      "isInput": false,
+      "externalInitializationAllowed": false,
+      "messages": {
+        "GetValue": [
+          "d1899cd8-8c70-4bd0-88cf-898975f92edb"
+        ]
+      },
+      "isGlobal": false,
+      "id": "688a1077-6aa9-461b-836e-fa1afbc56716",
+      "displayName": "Var",
+      "createdTime": "2022-04-08T15:14:08.7242514Z",
+      "updatedTime": "2022-04-08T19:48:23.677655Z",
+      "createdUserId": "8f6db5fe-1bd4-4c35-812c-4aa553b4e68a",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    },
+    {
+      "customTypeId": "8440787b-85bd-4ddc-9cea-455880f0d684",
+      "initializerType": "Action",
+      "scope": "Dialog",
+      "greedySlotFillingEnabled": false,
+      "isInput": false,
+      "externalInitializationAllowed": false,
+      "actionId": "c7326b98-5e80-4a19-9c1c-8312d3e638f7",
+      "isGlobal": false,
+      "id": "2cfa5747-cddd-4812-960b-7ecb2a1c372b",
+      "displayName": "",
+      "createdTime": "2022-04-08T15:14:08.7242514Z",
+      "updatedTime": "2022-04-08T19:48:23.677655Z",
+      "createdUserId": "8f6db5fe-1bd4-4c35-812c-4aa553b4e68a",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    }
+  ],
+  "jsonTypes": [
+    {
+      "customTypeSchema": "Json",
+      "id": "8440787b-85bd-4ddc-9cea-455880f0d684",
+      "displayName": "Response Json Type for Flow - Send an email",
+      "createdTime": "2022-04-08T15:13:51.131Z",
+      "updatedTime": "2022-04-08T15:13:51.131Z"
+    }
+  ]
+}

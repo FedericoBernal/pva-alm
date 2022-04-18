@@ -1,0 +1,61 @@
+name: trigger-deploy-tagged-solution
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        description: "GitHub tag for solution-version to deploy"
+      environment:
+        required: true
+        description: "GitHub environment name to deploy to"
+        default: prod
+env:
+  workflow_scripts_path: .github/workflows/scripts
+
+jobs:
+  trigger-deploy-tagged-solution:
+    runs-on: ubuntu-latest
+    steps:      
+      - uses: actions/checkout@v2
+      - name: deploy-tagged-solution-to-environment
+        id:  deploy-tagged-solution-to-environment
+        uses: actions/github-script@v5  
+        with:
+          # Workflows cannot be dispatched with the standard GITHUB_TOKEN, so we use a token that can
+          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy-tagged-solution-to-environment.yml',
+              ref: '${{ github.ref }}',
+              inputs: {
+                tag: '${{ github.event.inputs.tag }}',
+                environment: '${{ github.event.inputs.environment }}'
+              }
+            })
+      - name: check-workflow-status
+        id: check-workflow-status
+        uses: actions/github-script@v5
+        with:
+          script: |
+            let sleep = require('${{ env.workflow_scripts_path }}/js/test.js')
+            let currentStatus = null;
+            sleep(2000)
+            do {
+              let workflowLog = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'deploy-tagged-solution-to-environment.yml',
+                per_page: 1
+              })
+              
+              if (workflowLog.data.total_count > 0) {
+                currentStatus = workflowLog.data.workflow_runs[0].status
+              }
+              else {
+                break
+              }
+              console.log('deploy-tagged-solution-to-environment status: ' + currentStatus)
+              sleep(20000)
+            } while (currentStatus != 'completed'); 

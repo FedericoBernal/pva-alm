@@ -1,47 +1,44 @@
 <bot_botcomponentset>
-  <bot_botcomponent botcomponentid.schemaname="new_customtype_78c3442a84a644cb82172efcaaefb2f9_92610204747047ac8f788f7eecd91118" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_customtype_3641cc42f5d947419d6b221030d726bd_92610204747047ac8f788f7eecd91118" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_customtype_78c3442a84a644cb82172efcaaefb2f9_f86fcadfd497444e91ed11c12b059d10" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_customtype_3641cc42f5d947419d6b221030d726bd_f86fcadfd497444e91ed11c12b059d10" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_31f9dc3382d8488dbf4a37b1a87cb1b4" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_21a34f1673a24096a99ba0effb63cc1d" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_21a34f1673a24096a99ba0effb63cc1d" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_33d5123770ba4daeafae51b361ddc80a" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_33d5123770ba4daeafae51b361ddc80a" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_3d2584ec30914684839527e05e7be172_thankyou" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_3d2584ec30914684839527e05e7be172_thankyou" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_85df75ce08a44a9b82cc8f3fdb25f669" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_85df75ce08a44a9b82cc8f3fdb25f669" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_8a4964498f83424bb3a86295bf7d0952_startover" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_8a4964498f83424bb3a86295bf7d0952_startover" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_954135cafcd647eaae5999ad91fc08cf_talktoagent" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_954135cafcd647eaae5999ad91fc08cf_talktoagent" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_aeabea4d071f415c8c107e1cb7af5424_assumedsuccess" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_aeabea4d071f415c8c107e1cb7af5424_assumedsuccess" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_ba7b967c97ba4c39bca58a8bb6a72d59_conversationstart" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_ba7b967c97ba4c39bca58a8bb6a72d59_conversationstart" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_d2198a5ee41a48a5bf70ab8970145a9f_confirmedfailure" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_d2198a5ee41a48a5bf70ab8970145a9f_confirmedfailure" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_db1f76b081dc43389df9dd2df7518737_confirmedsuccess" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_db1f76b081dc43389df9dd2df7518737_confirmedsuccess" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_dbafebd526364487911b63a2a774389f" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_dbafebd526364487911b63a2a774389f" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
-    <iscustomizable>1</iscustomizable>
-  </bot_botcomponent>
-  <bot_botcomponent botcomponentid.schemaname="new_topic_78c3442a84a644cb82172efcaaefb2f9_f56d1a3e522740c78f9fac0939332dbd_goodbye" botid.schemaname="new_bot_78c3442a84a644cb82172efcaaefb2f9">
+  <bot_botcomponent botcomponentid.schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_f56d1a3e522740c78f9fac0939332dbd_goodbye" botid.schemaname="new_bot_3641cc42f5d947419d6b221030d726bd">
     <iscustomizable>1</iscustomizable>
   </bot_botcomponent>
 </bot_botcomponentset>

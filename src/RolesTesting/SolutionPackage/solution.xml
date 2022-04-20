@@ -1,22 +1,24 @@
-<ImportExportXml version="9.2.22031.144" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ImportExportXml version="9.2.22032.150" SolutionPackageVersion="9.2" languagecode="1033" generatedBy="CrmLive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SolutionManifest>
-    <UniqueName>MicaSolution</UniqueName>
+    <UniqueName>RolesTesting</UniqueName>
     <LocalizedNames>
-      <LocalizedName description="Mica Solution" languagecode="1033" />
+      <LocalizedName description="RolesTesting" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.0.0.2</Version>
+    <Version>1.0.0.1</Version>
     <Managed>0</Managed>
     <Publisher>
-      <UniqueName>Cr86818</UniqueName>
+      <UniqueName>DefaultPublisherorgea394ded</UniqueName>
       <LocalizedNames>
-        <LocalizedName description="CDS Default Publisher" languagecode="1033" />
+        <LocalizedName description="Default Publisher for orgea394ded" languagecode="1033" />
       </LocalizedNames>
-      <Descriptions />
+      <Descriptions>
+        <Description description="Default publisher for this organization" languagecode="1033" />
+      </Descriptions>
       <EMailAddress xsi:nil="true"></EMailAddress>
       <SupportingWebsiteUrl xsi:nil="true"></SupportingWebsiteUrl>
-      <CustomizationPrefix>cr62a</CustomizationPrefix>
-      <CustomizationOptionValuePrefix>34609</CustomizationOptionValuePrefix>
+      <CustomizationPrefix>new</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>10000</CustomizationOptionValuePrefix>
       <Addresses>
         <Address>
           <AddressNumber>1</AddressNumber>
@@ -76,9 +78,7 @@
         </Address>
       </Addresses>
     </Publisher>
-    <RootComponents>
-      <RootComponent type="29" id="{f11deaee-4db7-ec11-983f-0022482e2a27}" behavior="0" />
-    </RootComponents>
+    <RootComponents />
     <MissingDependencies />
   </SolutionManifest>
 </ImportExportXml>

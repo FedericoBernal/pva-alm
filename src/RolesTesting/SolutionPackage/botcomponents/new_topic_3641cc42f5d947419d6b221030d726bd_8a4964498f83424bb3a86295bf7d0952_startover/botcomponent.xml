@@ -1,8 +1,0 @@
-<botcomponent schemaname="new_topic_3641cc42f5d947419d6b221030d726bd_8a4964498f83424bb3a86295bf7d0952_startover">
-  <componenttype>0</componenttype>
-  <description>System Intent Start Over</description>
-  <iscustomizable>1</iscustomizable>
-  <name>Start over</name>
-  <statecode>0</statecode>
-  <statuscode>1</statuscode>
-</botcomponent>

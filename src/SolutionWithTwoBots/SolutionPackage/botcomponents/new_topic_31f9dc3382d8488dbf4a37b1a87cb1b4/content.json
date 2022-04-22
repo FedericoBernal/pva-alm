@@ -1,0 +1,48 @@
+{
+  "intents": [
+    {
+      "triggerQueries": [
+        "test"
+      ],
+      "dialogId": "new_topic_31f9dc3382d8488dbf4a37b1a87cb1b4",
+      "isTriggeringEnabled": true,
+      "id": "new_topic_31f9dc3382d8488dbf4a37b1a87cb1b4",
+      "displayName": "test",
+      "createdTime": "2022-04-20T17:17:40.725541Z",
+      "updatedTime": "2022-04-20T17:17:40.725541Z",
+      "createdUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    }
+  ],
+  "dialogs": [
+    {
+      "rootNodeId": "94ce8446-91dc-451d-8cf5-269f9689b782",
+      "messageNodes": [
+        {
+          "botMessageId": "f8fe6880-b802-4b90-8f0b-80747a7de845",
+          "nodeType": "BotMessageNode",
+          "id": "94ce8446-91dc-451d-8cf5-269f9689b782"
+        }
+      ],
+      "id": "new_topic_31f9dc3382d8488dbf4a37b1a87cb1b4",
+      "displayName": "Untitled",
+      "createdTime": "2022-04-20T17:17:40.725541Z",
+      "updatedTime": "2022-04-20T17:17:40.725541Z",
+      "createdUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    }
+  ],
+  "botMessages": [
+    {
+      "channelContent": {
+        "web": {
+          "contentFormat": "Markdown",
+          "content": "This is a test message"
+        }
+      },
+      "id": "f8fe6880-b802-4b90-8f0b-80747a7de845",
+      "createdTime": "2022-04-20T17:17:23.21Z",
+      "updatedTime": "2022-04-20T17:17:23.21Z"
+    }
+  ]
+}

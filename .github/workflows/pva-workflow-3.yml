@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: delete-and-import-unmanaged-solution
         id: delete-and-import-unmanaged-solution
-        uses: actions/github-script@latest
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
@@ -37,7 +37,7 @@ jobs:
 
       - name: check-delete-and-import-unmanaged-solution-workflow-status
         id: check-delete-and-import-unmanaged-solution-workflow-status
-        uses: actions/github-script@latest
+        uses: actions/github-script@v6
         with:
           script: |
             let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')

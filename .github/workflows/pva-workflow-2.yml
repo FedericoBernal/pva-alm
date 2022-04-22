@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: run-pva-workflow-1
         id: run-pva-workflow-1
-        uses: actions/github-script@latest
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
@@ -33,7 +33,7 @@ jobs:
 
       - name: check-pva-workflow-1-status
         id: check-pva-workflow-1-status
-        uses: actions/github-script@latest
+        uses: actions/github-script@v6
         with:
           script: |
             let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
@@ -68,7 +68,7 @@ jobs:
 
       - name: sync-from-main
         id: sync-from-main
-        uses: actions/github-script@latest
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
@@ -85,7 +85,7 @@ jobs:
 
       - name: check-sync-from-main-workflow-status
         id: check-sync-from-main-workflow-status
-        uses: actions/github-script@latest
+        uses: actions/github-script@v6
         with:
           script: |
             let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')

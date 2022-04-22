@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: deploy-tagged-solution-to-environment
         id:  deploy-tagged-solution-to-environment
-        uses: actions/github-script@latest
+        uses: actions/github-script@v6
         with:
           # Workflows cannot be dispatched with the standard GITHUB_TOKEN, so we use a token that can
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
@@ -36,7 +36,7 @@ jobs:
             })
       - name: check-workflow-status
         id: check-workflow-status
-        uses: actions/github-script@latest
+        uses: actions/github-script@v6
         with:
           script: |
             let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')

@@ -16,7 +16,7 @@ jobs:
   trigger-deploy-tagged-solution:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout@v3
       - name: deploy-tagged-solution-to-environment
         id:  deploy-tagged-solution-to-environment
         uses: actions/github-script@latest

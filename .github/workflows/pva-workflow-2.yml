@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout@v3
       - name: run-pva-workflow-1
         id: run-pva-workflow-1
         uses: actions/github-script@latest
@@ -64,7 +64,7 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
     needs: execute-pva-workflow-1
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout@v3
 
       - name: sync-from-main
         id: sync-from-main

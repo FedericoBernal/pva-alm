@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout@v3
       - name: delete-and-import-unmanaged-solution
         id: delete-and-import-unmanaged-solution
         uses: actions/github-script@latest

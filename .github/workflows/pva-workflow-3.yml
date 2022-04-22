@@ -1,0 +1,61 @@
+name: pva-workflow-3
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "GitHub environment name to import the solution"
+        required: true
+        default: "DEV"
+
+env:
+  workflow_scripts_path: .github/workflows/scripts
+
+jobs:
+  delete-and-import-unmanaged-solution:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - uses: actions/checkout@latest
+      - name: delete-and-import-unmanaged-solution
+        id: delete-and-import-unmanaged-solution
+        uses: actions/github-script@latest
+        with:
+          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'delete-and-import-unmanaged-solution.yml',
+              ref: '${{ github.ref }}',
+              inputs: {
+                solution_name: '${{ secrets.SOLUTION_NAME }}',
+                environment_url: '${{ secrets.ENVIRONMENT_URL }}',
+                ref: '${{ secrets.BRANCH_TO_CREATE }}'
+              }
+            })
+
+      - name: check-delete-and-import-unmanaged-solution-workflow-status
+        id: check-delete-and-import-unmanaged-solution-workflow-status
+        uses: actions/github-script@latest
+        with:
+          script: |
+            let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
+            let currentStatus = null;
+            sleep(2000)
+            do {
+              let workflowLog = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'delete-and-import-unmanaged-solution.yml',
+                per_page: 1
+              })
+              if (workflowLog.data.total_count > 0) {
+                currentStatus = workflowLog.data.workflow_runs[0].status
+              }
+              else {
+                break
+              }
+              console.log('delete-and-import-unmanaged-solution: ' + currentStatus)
+              sleep(20000)
+            } while (currentStatus != 'completed');

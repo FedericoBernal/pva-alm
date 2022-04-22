@@ -1,39 +1,44 @@
-name: pva-workflow
+name: pva-workflow-1
 on:
   workflow_dispatch:
     inputs:
-      solution_name:
-        description: "name of the Solution in Dataverse environment"
+      environment:
+        description: "GitHub environment name to get the solution"
         required: true
-        default: MicaSolution
-      environment_url:
-        description: "http endpoint of your Dataverse environment"
-        required: true
-        default: "https://orgea394ded.crm.dynamics.com/"
-      source_branch:
-        description: "source branch"
-        required: true
-        default: main
-      branch_to_create:
-        description: "branch to create"
-        required: false
-        default: "init2"
-      commit_message:
-        description: "message to provide for the commit"
-        required: true
-        default: "init message"
+        default: "DEV"
 env:
   workflow_scripts_path: .github/workflows/scripts
+  commit_message: "default commit message"
 
 jobs:
   export-unpack-commit-solution:
     runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@latest
+      - name: check-branch-existence
+        id: check-branch-existence
+        uses: actions/github-script@latest
+        with:
+          github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
+          script: |
+            let branch = await github.rest.git.listMatchingRefs({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'heads/${{ secrets.BRANCH_TO_CREATE }}'
+            })
+
+            if (branch.data.length > 0) {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: 'heads/${{ secrets.BRANCH_TO_CREATE }}'
+              })
+            }
 
       - name: exec-export-unpack-commit-solution-workflow
         id: exec-export-unpack-commit-solution-workflow
-        uses: actions/github-script@v5
+        uses: actions/github-script@latest
         with:
           github-token: ${{secrets.WORKFLOW_DISPATCH_TOKEN}}
           script: |
@@ -43,20 +48,20 @@ jobs:
               workflow_id: 'export-unpack-commit-solution.yml',
               ref: '${{ github.ref }}',
               inputs: {
-                solution_name: '${{ github.event.inputs.solution_name }}',
-                environment_url: '${{ github.event.inputs.environment_url }}',
-                source_branch: '${{ github.event.inputs.source_branch }}',
-                branch_to_create: '${{ github.event.inputs.branch_to_create }}',
-                commit_message: '${{ github.event.inputs.commit_message }}'
+                solution_name: '${{ secrets.SOLUTION_NAME }}',
+                environment_url: '${{ secrets.ENVIRONMENT_URL }}',
+                source_branch: '${{ secrets.SOURCE_BRANCH }}',
+                branch_to_create: '${{ secrets.BRANCH_TO_CREATE }}',
+                commit_message: '${{ env.commit_message }}'
               }
             })
 
       - name: check-workflow-status
         id: check-workflow-status
-        uses: actions/github-script@v5
+        uses: actions/github-script@latest
         with:
           script: |
-            let sleep = require('${{ env.workflow_scripts_path }}/js/test.js')
+            let sleep = require('${{ env.workflow_scripts_path }}/js/Sleep.js')
             let currentStatus = null;
             sleep(2000)
 
@@ -67,7 +72,7 @@ jobs:
                 workflow_id: 'export-unpack-commit-solution.yml',
                 per_page: 1
               })
-              
+
               if (workflowLog.data.total_count > 0) {
                 currentStatus = workflowLog.data.workflow_runs[0].status
               }

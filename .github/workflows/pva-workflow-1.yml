@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
     steps:
-      - uses: actions/checkout@latest
+      - uses: actions/checkout@ltst
       - name: check-branch-existence
         id: check-branch-existence
         uses: actions/github-script@latest

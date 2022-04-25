@@ -1,0 +1,100 @@
+{
+  "intents": [
+    {
+      "triggerQueries": [
+        "When are you closed",
+        "When are you open",
+        "Store hours",
+        "Daily open hours"
+      ],
+      "dialogId": "new_topic_11de385c82a24c708b02ca53c9f78a86_33d5123770ba4daeafae51b361ddc80a",
+      "isTriggeringEnabled": true,
+      "id": "new_topic_11de385c82a24c708b02ca53c9f78a86_33d5123770ba4daeafae51b361ddc80a",
+      "displayName": "Lesson 1 - A simple topic",
+      "description": "Lesson 1 - This lesson will show you how you can create a simple topic with one conditional branch.\n\nOver the next few lessons, we will show how to add and define variables, conditions and entities.\n\nWelcome to Power Virtual Agents!",
+      "createdTime": "2019-01-15T00:00:00Z",
+      "updatedTime": "2022-04-22T18:50:02.9408933Z",
+      "createdUserId": "user0",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    }
+  ],
+  "dialogs": [
+    {
+      "rootNodeId": "e901982c-a22d-4074-b8c7-f7842977a047",
+      "messageNodes": [
+        {
+          "botMessageId": "159e7c92-8871-41a0-a739-9f67085f995f",
+          "nodeType": "BotMessageNode",
+          "id": "e901982c-a22d-4074-b8c7-f7842977a047",
+          "defaultTargetNodeId": "f2f7532c-2fca-429a-b91b-248e262a30b4"
+        },
+        {
+          "botMessageId": "614e2fa3-2cf0-42e3-a2eb-18f9fb274ee6",
+          "nodeType": "BotMessageNode",
+          "id": "1f6c0946-4d56-4714-96f5-15e2247e953b",
+          "defaultTargetNodeId": "6e127cd1-99ff-4c5e-8f3e-9ae93c0d4777"
+        },
+        {
+          "botMessageId": "8a580dc5-5069-4808-a9a4-a09b02bfe623",
+          "nodeType": "BotMessageNode",
+          "id": "f2f7532c-2fca-429a-b91b-248e262a30b4",
+          "defaultTargetNodeId": "1f6c0946-4d56-4714-96f5-15e2247e953b"
+        }
+      ],
+      "dialogChangeNodes": [
+        {
+          "targetDialogId": "new_topic_11de385c82a24c708b02ca53c9f78a86_aeabea4d071f415c8c107e1cb7af5424_assumedsuccess",
+          "nodeType": "DialogChangeNode",
+          "id": "6e127cd1-99ff-4c5e-8f3e-9ae93c0d4777"
+        }
+      ],
+      "id": "new_topic_11de385c82a24c708b02ca53c9f78a86_33d5123770ba4daeafae51b361ddc80a",
+      "displayName": "Dialog",
+      "createdTime": "2019-01-15T00:00:00Z",
+      "updatedTime": "2022-04-22T18:50:02.9408933Z",
+      "createdUserId": "user0",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    }
+  ],
+  "botMessages": [
+    {
+      "channelContent": {
+        "web": {
+          "contentFormat": "Markdown",
+          "content": "I'm happy to help with store hours."
+        }
+      },
+      "id": "159e7c92-8871-41a0-a739-9f67085f995f",
+      "createdTime": "2019-01-15T00:00:00Z",
+      "updatedTime": "2022-04-22T18:49:10.0754316Z",
+      "createdUserId": "user0",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    },
+    {
+      "channelContent": {
+        "web": {
+          "contentFormat": "Markdown",
+          "content": "The Redmond hours are:\n\n*   Mon-Fri: 9am to 6pm\n*   Sat: 10am to 4pm\n*   Sun: Closed\n\nThe Seattle hours are:\n\n*   Mon-Fri: 9am to 6pm\n*   Sat-Sun: 10am to 4pm"
+        }
+      },
+      "id": "614e2fa3-2cf0-42e3-a2eb-18f9fb274ee6",
+      "createdTime": "2019-10-24T04:02:13.435Z",
+      "updatedTime": "2022-04-22T18:49:10.0754316Z",
+      "createdUserId": "user0",
+      "updatedUserId": "35ae2206-2bb7-4b2a-ac2b-5e70f2a23f4a"
+    },
+    {
+      "channelContent": {
+        "web": {
+          "contentFormat": "Markdown",
+          "content": "This is the Bot A"
+        }
+      },
+      "id": "8a580dc5-5069-4808-a9a4-a09b02bfe623",
+      "createdTime": "2022-04-22T18:49:52.176Z",
+      "updatedTime": "2022-04-22T18:49:52.176Z",
+      "createdUserId": "user-0",
+      "updatedUserId": "user-0"
+    }
+  ]
+}

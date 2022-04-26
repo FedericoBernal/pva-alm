@@ -9,9 +9,9 @@
     <Version>1.0.0.0</Version>
     <Managed>2</Managed>
     <Publisher>
-      <UniqueName>DefaultPublisherorgea394ded</UniqueName>
+      <UniqueName>DefaultPublisherorgeb492264</UniqueName>
       <LocalizedNames>
-        <LocalizedName description="Default Publisher for orgea394ded" languagecode="1033" />
+        <LocalizedName description="Default Publisher for orgeb492264" languagecode="1033" />
       </LocalizedNames>
       <Descriptions>
         <Description description="Default publisher for this organization" languagecode="1033" />
@@ -80,6 +80,15 @@
       </Addresses>
     </Publisher>
     <RootComponents />
-    <MissingDependencies />
+    <MissingDependencies>
+      <MissingDependency>
+        <Required type="bot" displayName="new_bot_11de385c82a24c708b02ca53c9f78a86" solution="SolutionWithOneBot (1.0.20220425.6)" id.schemaname="new_bot_11de385c82a24c708b02ca53c9f78a86" />
+        <Dependent type="bot" displayName="new_bot_11de385c82a24c708b02ca53c9f78a86" id.schemaname="new_bot_11de385c82a24c708b02ca53c9f78a86" />
+      </MissingDependency>
+      <MissingDependency>
+        <Required type="bot" displayName="new_bot_fa11ab99a2b148c1969e7318e9ce9840" solution="SolutionWithOneBot (1.0.20220425.6)" id.schemaname="new_bot_fa11ab99a2b148c1969e7318e9ce9840" />
+        <Dependent type="bot" displayName="new_bot_fa11ab99a2b148c1969e7318e9ce9840" id.schemaname="new_bot_fa11ab99a2b148c1969e7318e9ce9840" />
+      </MissingDependency>
+    </MissingDependencies>
   </SolutionManifest>
 </ImportExportXml>

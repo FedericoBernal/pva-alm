@@ -55,7 +55,7 @@ jobs:
                 commit_message: '${{ env.commit_message }}'
               }
             })
-            if <conclusion == "failed"> ; then
+            if (conclusion == "failed") ; then
               echo "Workflow failed"
               exit 1
             fi

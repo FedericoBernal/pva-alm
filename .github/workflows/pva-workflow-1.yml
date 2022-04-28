@@ -55,6 +55,10 @@ jobs:
                 commit_message: '${{ env.commit_message }}'
               }
             })
+            if <conclusion == "failed"> ; then
+              echo "Workflow failed"
+              exit 1
+            fi
 
       - name: check-workflow-status
         id: check-workflow-status
@@ -83,3 +87,5 @@ jobs:
               console.log('export-unpack-commit-solution status: ' + currentStatus)
               sleep(20000)
             } while (currentStatus != 'completed');
+
+

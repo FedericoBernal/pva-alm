@@ -80,7 +80,7 @@ jobs:
                 break
               }
 
-              if (workflowLog.data.workflow_runs[0].conclusion == 'failed') {
+              if (workflowLog.data.workflow_runs[0].conclusion == 'success') {
               echo "::error::Workflow failed" && exit 1
               }
 

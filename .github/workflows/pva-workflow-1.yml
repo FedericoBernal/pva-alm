@@ -55,10 +55,6 @@ jobs:
                 commit_message: '${{ env.commit_message }}'
               }
             })
-            if (conclusion == "failed") ; then
-              echo "Workflow failed"
-              exit 1
-            fi
 
       - name: check-workflow-status
         id: check-workflow-status
@@ -82,6 +78,11 @@ jobs:
               }
               else {
                 break
+              }
+
+              if (workflowLog.data.workflow_runs[0].conclusion == "failed") {
+              echo "Workflow failed"
+              exit 1
               }
 
               console.log('export-unpack-commit-solution status: ' + currentStatus)

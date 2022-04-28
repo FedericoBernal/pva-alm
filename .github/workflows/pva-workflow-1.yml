@@ -80,10 +80,6 @@ jobs:
                 break
               }
 
-              if (workflowLog.data.workflow_runs[0].conclusion == 'success') {
-              echo "::error::Workflow failed" && exit 1
-              }
-
               console.log('export-unpack-commit-solution status: ' + currentStatus)
               sleep(20000)
             } while (currentStatus != 'completed');

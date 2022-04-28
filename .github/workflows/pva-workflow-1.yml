@@ -81,8 +81,7 @@ jobs:
               }
 
               if (workflowLog.data.workflow_runs[0].conclusion == "failed") {
-              echo "Workflow failed"
-              exit 1
+              echo "::error::Workflow failed" && exit 1
               }
 
               console.log('export-unpack-commit-solution status: ' + currentStatus)

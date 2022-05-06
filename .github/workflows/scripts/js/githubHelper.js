@@ -12,6 +12,13 @@ const checkWorkflowStatus = async (github, context, core, id) => {
   let currentStatus = null;
   let conclusion = null;
   let html_url = null;
+  function wait(ms){
+    var start = new Date().getTime();
+    var end = start;
+    while(end < start + ms) {
+      end = new Date().getTime();
+   }
+ }
   
   console.log('Checking the status for workflow ' + id)
   do {
@@ -21,8 +28,7 @@ const checkWorkflowStatus = async (github, context, core, id) => {
       workflow_id: id,
       per_page: 1
     })
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    await delay(20000)
+    wait(20000)
     if (workflowLog.data.total_count > 0) {
       currentStatus = workflowLog.data.workflow_runs[0].status
       conclusion = workflowLog.data.workflow_runs[0].conclusion

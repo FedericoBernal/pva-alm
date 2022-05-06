@@ -21,9 +21,7 @@ const checkWorkflowStatus = async (github, context, core, id) => {
       workflow_id: id,
       per_page: 1
     })
-    setTimeout(function(){ 
-      console.log("Checking the " + workflowLog) 
-    }, 20000)
+    await delay(20000)
     if (workflowLog.data.total_count > 0) {
       currentStatus = workflowLog.data.workflow_runs[0].status
       conclusion = workflowLog.data.workflow_runs[0].conclusion

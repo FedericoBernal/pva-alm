@@ -7,7 +7,10 @@ on:
         description: "GitHub environment name to import the solution"
         required: true
         default: "DEV"
-
+      commit_message:
+        description: "commit message"
+        required: true
+        default: "default commit message"
 env:
   workflow_scripts_path: .github/workflows/scripts
 

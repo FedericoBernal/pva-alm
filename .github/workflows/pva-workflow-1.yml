@@ -6,9 +6,12 @@ on:
         description: "GitHub environment name to get the solution"
         required: true
         default: "DEV"
+      commit_message:
+        description: "commit message"
+        required: true
+        default: "default commit message"
 env:
   workflow_scripts_path: .github/workflows/scripts
-  commit_message: "default commit message"
 
 jobs:
   export-unpack-commit-solution:
@@ -52,7 +55,7 @@ jobs:
                 environment_url: '${{ secrets.ENVIRONMENT_URL }}',
                 source_branch: '${{ secrets.SOURCE_BRANCH }}',
                 branch_to_create: '${{ secrets.BRANCH_TO_CREATE }}',
-                commit_message: '${{ env.commit_message }}'
+                commit_message: '${{ github.event.inputs.commit_message }}'
               }
             })
 

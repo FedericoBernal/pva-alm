@@ -28,7 +28,7 @@ const checkWorkflowStatus = async (github, context, core, id) => {
       workflow_id: id,
       per_page: 1
     })
-    wait(20000)
+    wait(2000)
     if (workflowLog.data.total_count > 0) {
       currentStatus = workflowLog.data.workflow_runs[0].status
       conclusion = workflowLog.data.workflow_runs[0].conclusion
@@ -39,7 +39,7 @@ const checkWorkflowStatus = async (github, context, core, id) => {
     }
     console.log(new Date().toISOString() + ' - status: ' + currentStatus)
   } while (currentStatus != 'completed');
-
+  wait(20000)
   if (conclusion != 'success') {
     core.setFailed('Workflow execution failed. For more details go to ' + html_url)
   }

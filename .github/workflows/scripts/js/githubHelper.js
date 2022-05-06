@@ -12,10 +12,7 @@ const checkWorkflowStatus = async (github, context, core, id) => {
   let currentStatus = null;
   let conclusion = null;
   let html_url = null;
-  setTimeout(function(){ 
-    console.log("Waiting") 
-  }, 2000)
-  console.log('async test')
+  
   console.log('Checking the status for workflow ' + id)
   do {
     let workflowLog = await github.rest.actions.listWorkflowRuns({
@@ -24,6 +21,9 @@ const checkWorkflowStatus = async (github, context, core, id) => {
       workflow_id: id,
       per_page: 1
     })
+    setTimeout(function(){ 
+      console.log("Waiting") 
+    }, 20000)
     if (workflowLog.data.total_count > 0) {
       currentStatus = workflowLog.data.workflow_runs[0].status
       conclusion = workflowLog.data.workflow_runs[0].conclusion
@@ -33,9 +33,6 @@ const checkWorkflowStatus = async (github, context, core, id) => {
       break
     }
     console.log(new Date().toISOString() + ' - status: ' + currentStatus)
-    setTimeout(function(){ 
-      console.log("Waiting") 
-    }, 20000)
   } while (currentStatus != 'completed');
 
   if (conclusion != 'success') {

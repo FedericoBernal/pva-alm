@@ -7,6 +7,7 @@ const dispatchWorkflow = async (github, context, id, reference, parameters) => {
     inputs: parameters
   })
 }
+setTimeout(checkWorkflowStatus(), 20000)
 
 const checkWorkflowStatus = async (github, context, core, id) => {
   let currentStatus = null;
@@ -22,7 +23,7 @@ const checkWorkflowStatus = async (github, context, core, id) => {
       per_page: 1
     })
     setTimeout(function(){ 
-      console.log("Checking the " + workflowLog) 
+      console.log("Checking the listWorkflowRuns") 
     }, 20000)
     if (workflowLog.data.total_count > 0) {
       currentStatus = workflowLog.data.workflow_runs[0].status

@@ -15,7 +15,7 @@ const checkWorkflowStatus = async (github, context, core, id) => {
   setTimeout(function(){ 
     console.log("Waiting") 
   }, 2000)
-
+  console.log('async test')
   console.log('Checking the status for workflow ' + id)
   do {
     let workflowLog = await github.rest.actions.listWorkflowRuns({

@@ -1,4 +1,4 @@
-name: pva-workflow-1
+name: pvawf1-export-unpack-commit-solution-workflow
 on:
   workflow_dispatch:
     inputs:

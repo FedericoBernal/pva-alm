@@ -12,7 +12,7 @@ const checkWorkflowStatus = async (github, context, core, id) => {
   let currentStatus = null;
   let conclusion = null;
   let html_url = null;
-  sleep(2000)
+  const delay = ms => new Promise(res => setTimeout(res, ms));
 
   console.log('Checking the status for workflow ' + id)
   do {
@@ -22,6 +22,7 @@ const checkWorkflowStatus = async (github, context, core, id) => {
       workflow_id: id,
       per_page: 1
     })
+    delay(20000)
     if (workflowLog.data.total_count > 0) {
       currentStatus = workflowLog.data.workflow_runs[0].status
       conclusion = workflowLog.data.workflow_runs[0].conclusion
@@ -31,20 +32,11 @@ const checkWorkflowStatus = async (github, context, core, id) => {
       break
     }
     console.log(new Date().toISOString() + ' - status: ' + currentStatus)
-    sleep(20000)
   } while (currentStatus != 'completed');
 
   if (conclusion != 'success') {
     core.setFailed('Workflow execution failed. For more details go to ' + html_url)
   }
-}
-
-const sleep = (milliseconds) => {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
 }
 
 module.exports = {
